@@ -1,0 +1,31 @@
+{
+  "project": {
+    "creationData": {
+      "type": "Import",
+      "projectTypeName": "com.intel.xdk.projecttype.iotapp",
+      "src": "",
+      "projectGuid": "c84925e8-c3c9-42e8-95b1-78ec26e0cf98",
+      "lastModifiedDate": 1508811618841,
+      "creationDate": 1508811618533
+    },
+    "gameAssetDirectory": "asset",
+    "gameMetadata": {},
+    "testDirectory": "test",
+    "projectTags": [],
+    "projectFiles": {},
+    "projectDirectories": {
+      "xdk": {
+        "settings": {
+          "project": {
+            "XDK-generated": "true"
+          }
+        }
+      }
+    },
+    "buildConfigurations": {},
+    "serviceMethods": [],
+    "sourceDirectory": "",
+    "startFile": "main.js",
+    "projectSettingsVersion": "3.0.0"
+  }
+}
