@@ -3,16 +3,133 @@
 <html>
     <head>
      
-        <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+        <!--<meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">-->
+        <meta http-equiv="Content-Security-Policy" content="-src 'self' http://paw.ic.ufmt.br/ 'unsafe-inline' 'unsafe-eval'">
         <meta name="format-detection" content="telephone=no">
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
-        <link rel="stylesheet" type="text/css" href="css/index.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.min.css">
+        <link rel="stylesheet" type="text/css" href="css/jquery.mobile.theme.min.css">
         <title>Hello World</title>
     </head>
+
     <body>
+    
+        <div data-role="page" id="foo">
         
+                <div data-role="header">
+                    <h1>Programação Web2</h1>
+                </div>
+
+                    <ul>
+                        <li><button onclick="alertJs()"> Alerta Web </button><br /></li>
+
+                        <li><button onclick="alertNativo()"> Alerta Nativo </button><br /></li>
+
+                        <li><button onclick="toggleLight()"> Liga / Desliga </button><br /></li>
+
+                        <li><button onclick="vibracao(500)"> Vibrar </button></li>
+                        
+                        <!--<li><button></button></li>-->
+                    </ul>
+                    
+                    <div data-role="content">
+                            <table data-role="table" id="tb-lista-alunos" data-mode="reflow"
+                                class="ui-responsive">
+                                <thead>
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>NOME</th>
+                                        <th>TELEFONE</th>
+                                        <th>E-MAIL</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                   
+                                </tbody>
+                            </table>
+                        </div>
+
+                        <div data-role="footer">       
+                            <h4>Instituto de Computação</h4>
+                        </div>  
+        
+        </div>
+       
+
         <script type="text/javascript" src="cordova.js"></script>
-        <script type="text/javascript" src="js/index.js"></script>
+        <script type="text/javascript" src="js/jquery.min.js"></script>
+        <script type="text/javascript" src="js/jquery.mobile.js"></script>
+        <script>
+
+            document.addEventListener("deviceready",onDeviceReady,false);
+
+            function onDeviceReady(){
+
+            }
+            function alertJs(){
+                alert("Alert em Js");
+            }
+
+            function alertNativo(){
+                navigator.notification.alert(
+                    'Alert nativo do Android', 
+                    null, 
+                    'Sucesso!',
+                    'Ok'
+                    
+                );
+            }
+
+            function vibracao(tempo){
+
+                navigator.vibrate(tempo);
+            }
+
+            function togglelight(){
+
+                window.plugins.flashlight.toggle(
+                    null,
+                    null,
+                    {intensity:0.5} );
+
+            }
+
+            function carregarAlunos(){
+
+                $.mobile.loading('show');
+                $.ajax(
+                    {
+                        method      :   "GET",
+                        url         :   "http://paw.ic.ufmt.br/paw2/alunos/get.php",
+                        dataType    :   "json",
+                        success     :   function(response){
+
+                            if(response.status == "success") {
+                                for(i=0; i < response.alunos.length; i++ ){
+
+                                    $("#tb-lista-alunos > tbody").append(
+                                        "<tr>"
+                                        +"<td">+response.alunos[i].id+"</td>"
+                                        +"<td>"+response.alunos[i].rga+"</td>"
+                                        +"<td>"+response.alunos[i].nome+"</td>"
+                                        +"</tr>"    
+                                    );
+
+                                }        
+                            }
+
+                            
+                            },
+                            complete : function(){
+                                $.mobile.loading('hide');
+                            }
+
+                    }    
+                );
+
+            }
+
+        </script>
     </body>
 </html>
